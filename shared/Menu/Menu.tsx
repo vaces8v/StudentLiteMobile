@@ -7,7 +7,7 @@ import WeatherSvg from "../../assets/svg/Weather";
 import DrawerIconSvg from "../../assets/svg/DrawerIcon";
 import {ChevronDown, QrCode} from 'lucide-react-native';
 import {Animated} from "react-native";
-import {useRouter} from "expo-router";
+import {usePathname, useRouter} from "expo-router";
 
 const ScreenWidth = Dimensions.get("window").width;
 const avatarSrc = '';
@@ -15,6 +15,8 @@ const avatarSrc = '';
 export function Menu() {
     const [openMenu, setOpenMenu] = useState<boolean>(false);
     const scaleAnim = useRef(new Animated.Value(0)).current;
+    const [disabledCurrentPath, setDisabledCurrentPath] = useState<string>('');
+    const pathName = usePathname()
     const router = useRouter()
 
     useEffect(() => {
@@ -25,16 +27,33 @@ export function Menu() {
         }).start();
     }, [openMenu]);
 
+    useEffect(() => {
+        setDisabledCurrentPath(pathName)
+    }, [pathName]);
+
     const animatedStyle = {
         transform: [{scale: scaleAnim}],
     };
 
+
+
     return (
         <View style={styles.navContainer}>
-            <HomeSvg/>
-            <WeatherSvg/>
+            <TouchableOpacity disabled={disabledCurrentPath === '/' ? true : false} onPress={() => router.push('/')}>
+                <HomeSvg/>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                disabled={disabledCurrentPath === '/weather' ? true : false}
+                onPress={() => router.push('/weather')}>
+                <WeatherSvg />
+            </TouchableOpacity>
+
             {avatarSrc ? (
-                <View style={styles.avatarContainer}>
+                <TouchableOpacity
+                    disabled={disabledCurrentPath === '/profile' ? true : false}
+                    onPress={() => router.push('/profile')}
+                    style={styles.avatarContainer}>
                     <Avatar
                         size="medium"
                         source={{
@@ -45,9 +64,12 @@ export function Menu() {
                         }}
                         icon={{name: 'user', type: 'font-awesome'}}
                     />
-                </View>
+                </TouchableOpacity>
             ) : (
-                <View style={styles.avatarContainerDefault}>
+                <TouchableOpacity
+                    disabled={disabledCurrentPath === '/profile' ? true : false}
+                    onPress={() => router.push('/profile')}
+                    style={styles.avatarContainerDefault}>
                     <Avatar
                         size="medium"
                         imageProps={{
@@ -55,7 +77,7 @@ export function Menu() {
                         }}
                         icon={{name: 'user', type: 'font-awesome'}}
                     />
-                </View>
+                </TouchableOpacity>
             )}
             <MailSvg/>
             <TouchableOpacity activeOpacity={0.7} onPress={() => setOpenMenu(prev => !prev)}>

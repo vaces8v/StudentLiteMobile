@@ -2,10 +2,11 @@ import {Redirect, Stack} from "expo-router";
 import {StatusBar} from "expo-status-bar";
 import {SafeAreaProvider, useSafeAreaInsets} from "react-native-safe-area-context";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
+import {Menu} from "@/shared/Menu/Menu";
 
 export default function AppLayout() {
   const insets = useSafeAreaInsets()
-  const token = 'asdasd';
+  const token = 'sadas';
 
   if (!token) {
     return <Redirect href={'/login'} />;
@@ -27,13 +28,20 @@ export default function AppLayout() {
               paddingTop: insets.top
             }
           }} />
-          <Stack.Screen name="qrscanner" options={{
+          <Stack.Screen name="weather" options={{
             contentStyle: {
-              backgroundColor: 'transparent',
-              padding: 0,
+              backgroundColor: "transparent",
+              paddingTop: insets.top
+            }
+          }} />
+          <Stack.Screen name="profile" options={{
+            contentStyle: {
+              backgroundColor: "transparent",
+              paddingTop: insets.top
             }
           }} />
         </Stack>
+        <Menu/>
       </GestureHandlerRootView>
     </SafeAreaProvider>
   )

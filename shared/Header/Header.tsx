@@ -6,6 +6,7 @@ import {TouchableOpacity} from "react-native-gesture-handler";
 import {CalendarDays} from "lucide-react-native";
 import {useRouter} from "expo-router";
 import {useThemeColor} from "@/hooks/useThemeColor";
+import DatePicker from "@/shared/DatePicker/DatePicker";
 
 const Header = () => {
     const color = useThemeColor({}, 'background');
@@ -19,20 +20,17 @@ const Header = () => {
                     source={require('../../assets/logo.png')}
                     resizeMode="contain"
                 />
-                <View style={styles.weatherInfo}>
+                <TouchableOpacity onPress={() => router.push('/weather')} activeOpacity={0.9} style={styles.weatherInfo}>
                     <Cloudy/>
                     <Text style={styles.temperature}>+15°</Text>
-                </View>
+                </TouchableOpacity>
             </View>
             <View style={styles.scheduleHeader} className="px-[10px]">
                 <View style={styles.scheduleTitle}>
                     <Burger/>
                     <Text style={styles.scheduleText}>Расписание</Text>
                 </View>
-                <TouchableOpacity onPress={() => router.push('/journal/1')} style={styles.datePicker}>
-                    <Text style={styles.dateText}>09.09 - 15.09</Text>
-                    <CalendarDays color={color} size={28} strokeWidth={1}/>
-                </TouchableOpacity>
+                <DatePicker/>
             </View>
 
             <ScrollView

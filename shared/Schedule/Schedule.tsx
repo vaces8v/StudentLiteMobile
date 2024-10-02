@@ -1,19 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
     View,
-    Text,
     StyleSheet,
     ScrollView,
-    Image,
     RefreshControl,
     Dimensions,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import Cloudy from "../../assets/svg/weather/Cloudy";
-import Burger from "../../assets/svg/Burger";
-import {CalendarDays} from "lucide-react-native";
-import {useThemeColor} from "@/hooks/useThemeColor";
-import {useRouter} from "expo-router";
 import Lesson from "@/shared/Lesson/Lesson";
 import Swiper from 'react-native-swiper';
 import {useSafeAreaInsets} from "react-native-safe-area-context";
@@ -117,47 +109,45 @@ const data = [
 
 const Schedule: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
-    const insets = useSafeAreaInsets().top
 
     return (
-        <ScrollView style={{flex: 1}} refreshControl={<RefreshControl refreshing={loading} onRefresh={() => { /* handle refresh */ }} />} nestedScrollEnabled={true} className="h-screen" >
-                <Header/>
-                <View className="flex flex-1 mb-[30px]">
-                    <Swiper
-                        loop={false}
-                        horizontal={true}
-                        showsButtons={false}
-                        showsPagination={false}
-                        className="flex"
-                        style={{ height: '100%' }}
-                    >
-                        {data.map((slide, index) => (
-                            <View
-                                key={index}
-                                style={styles.slide}
-                            >
-                                {slide.map((lesson) => (
-                                    <Lesson
-                                        key={lesson.id}
-                                        timeStart={lesson.timeStart}
-                                        timeEnd={lesson.timeEnd}
-                                        office={lesson.office}
-                                        theme={lesson.theme}
-                                        lesson={lesson.lesson}
-                                        content={lesson.content}
-                                    />
-                                ))}
-                            </View>
-                        ))}
-                    </Swiper>
-                </View>
+        <ScrollView style={{flex: 1}} refreshControl={<RefreshControl refreshing={loading} onRefresh={() => { /* handle refresh */
+        }}/>} nestedScrollEnabled={true}>
+            <Header/>
+            <View className="mb-[30px]">
+                <Swiper
+                    loop={false}
+                    horizontal={true}
+                    showsButtons={false}
+                    showsPagination={false}
+                >
+                    {data.map((slide, index) => (
+                        <View
+                            key={index}
+                            style={styles.slide}
+                        >
+                            {slide.map((lesson) => (
+                                <Lesson
+                                    key={lesson.id}
+                                    timeStart={lesson.timeStart}
+                                    timeEnd={lesson.timeEnd}
+                                    office={lesson.office}
+                                    theme={lesson.theme}
+                                    lesson={lesson.lesson}
+                                    content={lesson.content}
+                                />
+                            ))}
+                        </View>
+                    ))}
+                </Swiper>
+            </View>
         </ScrollView>
     );
 };
 
 export default Schedule;
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
     logo: {
         height: 40,
         width: 190,
@@ -210,5 +200,7 @@ const styles= StyleSheet.create({
     },
     slide: {
         alignItems: 'center',
+        width: Dimensions.get('window').width,
+        height: '100%',
     },
 });

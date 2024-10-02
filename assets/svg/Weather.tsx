@@ -1,5 +1,6 @@
 import * as React from "react"
 import Svg, { SvgProps, Path } from "react-native-svg"
+
 const WeatherSvg = (props: SvgProps) => (
   <Svg
     width={43}
