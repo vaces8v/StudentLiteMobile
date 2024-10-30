@@ -114,12 +114,11 @@ const Schedule: React.FC = () => {
         <ScrollView style={{flex: 1}} refreshControl={<RefreshControl refreshing={loading} onRefresh={() => { /* handle refresh */
         }}/>} nestedScrollEnabled={true}>
             <Header/>
-            <View className="mb-[30px]">
-                <Swiper
-                    loop={false}
+            <View className="flex-1 h-auto mb-[100px]">
+                <ScrollView
                     horizontal={true}
-                    showsButtons={false}
-                    showsPagination={false}
+                    pagingEnabled={true}
+                    showsHorizontalScrollIndicator={false}
                 >
                     {data.map((slide, index) => (
                         <View
@@ -139,7 +138,7 @@ const Schedule: React.FC = () => {
                             ))}
                         </View>
                     ))}
-                </Swiper>
+                </ScrollView>
             </View>
         </ScrollView>
     );
@@ -201,6 +200,5 @@ const styles = StyleSheet.create({
     slide: {
         alignItems: 'center',
         width: Dimensions.get('window').width,
-        height: '100%',
     },
 });
